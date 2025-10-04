@@ -22,9 +22,9 @@
 <div align="center">
 
 <!-- BLOG-POST-LIST:START -->
-- [Pytorch - Audio Input/Output](https://cherryberry0327.tistory.com/17)
-- [PyTorch 환경 점검과 GPU 테스트](https://cherryberry0327.tistory.com/16)
-- [백준 1946 - 신입 사원 [python]](https://cherryberry0327.tistory.com/15)
+[Pytorch - Audio Input/Output](https://cherryberry0327.tistory.com/17)
+[PyTorch 환경 점검과 GPU 테스트](https://cherryberry0327.tistory.com/16)
+[백준 1946 - 신입 사원 [python]](https://cherryberry0327.tistory.com/15)
 <!-- BLOG-POST-LIST:END -->
 </div>
 
