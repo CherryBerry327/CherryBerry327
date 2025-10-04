@@ -3,13 +3,14 @@ name: Update blog posts
 on:
   schedule:
     - cron: "0 0 * * *"   # 매일 0시(UTC) 실행 → 한국시간 오전 9시
-  workflow_dispatch:      # 수동 실행 가능
+  workflow_dispatch:
 
 jobs:
   update-readme-with-blog:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
-      - uses: gautamkrishnar/blog-post-workflow@master
+      - name: Update README with blog posts
+        uses: gautamkrishnar/blog-post-workflow@master
         with:
           feed_list: "https://api.rss2json.com/v1/api.json?rss_url=https://cherryberry0327.tistory.com/rss"
