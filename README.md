@@ -40,7 +40,7 @@
 ---
 
 ## 📰 Blog / Recent Posts  
-[![Blog Badge](https://img.shields.io/badge/Tistory-Blog-orange?style=flat&logo=tistory)](https://cherryberry0327.tistory.com/)  
+최신 글을 보려면 [내 블로그](https://cherryberry0327.tistory.com/) 방문하기 :revolving_hearts: [![Blog Badge](https://img.shields.io/badge/Tistory-Blog-orange?style=flat&logo=tistory)](https://cherryberry0327.tistory.com/)  
 
 <!-- BLOG-POST-LIST:START -->
 <!-- BLOG-POST-LIST:END -->
