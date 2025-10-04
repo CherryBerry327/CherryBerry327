@@ -28,6 +28,5 @@
 <!-- BLOG-POST-LIST:END -->
 </div>
 
-## 📫 Contact & Links  
+## 📫 Contact
 - **📧 Email**: yurica0615@gmail.com  
-- **🌐 Blog**: [cherryberry0327.tistory.com](https://cherryberry0327.tistory.com/)  
