@@ -25,7 +25,7 @@ jobs:
           JSON="$(curl -fsSL "$FEED_URL")"
 
           # 최근 5개 제목+링크를 마크다운 리스트로 생성
-          LIST="$(echo "$JSON" | jq -r '.items[:5][] | "- [\(.title | gsub("\n";" ") )](\(.link))"')"
+          LIST="$(echo "$JSON" | jq -r '.items[:3][] | "- [\(.title | gsub("\n";" ") )](\(.link))"')"
 
           # GitHub Actions 출력 변수로 전달
           {
