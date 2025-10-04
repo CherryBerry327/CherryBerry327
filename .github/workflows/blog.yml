@@ -1,19 +1,54 @@
-name: Update blog posts
-
+name: Update blog posts (rss2json)
 on:
   schedule:
-    - cron: "0 0 * * *"   # 매일 UTC 0시 (한국 오전 9시)
+    - cron: "0 0 * * *"   # 매일 UTC 00:00 (KST 09:00)
   workflow_dispatch:
 
 jobs:
-  update-readme-with-blog:
+  update:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
-      - name: Update README with blog posts
-        uses: sarisia/actions-rss-to-readme@v1
+      - uses: actions/checkout@v4
+
+      - name: Build blog list with rss2json
+        id: build
+        run: |
+          FEED_URL="https://api.rss2json.com/v1/api.json?rss_url=https://cherryberry0327.tistory.com/rss"
+          JSON=$(curl -fsSL "$FEED_URL")
+          # 최근 5개 제목+링크 뽑아 마크다운 리스트로 생성
+          LIST=$(echo "$JSON" | python3 - <<'PY'
+import sys, json
+data=json.load(sys.stdin)
+items=data.get("items",[])[:5]
+for it in items:
+    title=it.get("title","(no title)").replace("\n"," ").strip()
+    url=it.get("link","#")
+    print(f"- [{title}]({url})")
+PY
+)
+          echo "list<<EOF" >> $GITHUB_OUTPUT
+          echo "$LIST" >> $GITHUB_OUTPUT
+          echo "EOF" >> $GITHUB_OUTPUT
+
+      - name: Inject into README
+        run: |
+          FILE="README.md"
+          START="<!-- BLOG-POST-LIST:START -->"
+          END="<!-- BLOG-POST-LIST:END -->"
+          LIST="${{ steps.build.outputs.list }}"
+
+          # 구간 치환
+          awk -v start="$START" -v end="$END" -v repl="$LIST" '
+            BEGIN{insec=0}
+            {
+              if($0 ~ start){print $0; print repl; insec=1; next}
+              if($0 ~ end){insec=0}
+              if(!insec) print $0
+            }' "$FILE" > README.tmp && mv README.tmp "$FILE"
+
+      - name: Commit & Push
+        uses: stefanzweifel/git-auto-commit-action@v5
         with:
-          url: https://cherryberry0327.tistory.com/rss
-          file: README.md
-          max: 5
+          commit_message: "docs: update blog posts via rss2json"
+          file_pattern: README.md
 
