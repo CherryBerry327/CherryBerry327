@@ -38,17 +38,25 @@ PY
           LIST="${{ steps.build.outputs.list }}"
 
           # 구간 치환
-          awk -v start="$START" -v end="$END" -v repl="$LIST" '
-            BEGIN{insec=0}
-            {
-              if($0 ~ start){print $0; print repl; insec=1; next}
-              if($0 ~ end){insec=0}
-              if(!insec) print $0
-            }' "$FILE" > README.tmp && mv README.tmp "$FILE"
+          awk -v start_marker="$START" -v end_marker="$END" -v replacement="$LIST" '
+            $0 ~ start_marker {
+              print $0;
+              print replacement;
+              in_section = 1;
+              next;
+            }
+            $0 ~ end_marker {
+              print $0;
+              in_section = 0;
+              next;
+            }
+            !in_section {
+              print $0;
+            }
+          ' "$FILE" > README.tmp && mv README.tmp "$FILE"
 
       - name: Commit & Push
         uses: stefanzweifel/git-auto-commit-action@v5
         with:
           commit_message: "docs: update blog posts via rss2json"
           file_pattern: README.md
-
