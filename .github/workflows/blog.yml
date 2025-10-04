@@ -6,7 +6,7 @@ on:
   workflow_dispatch:
 
 permissions:
-  contents: write  # README 커밋을 위해 필요
+  contents: write  # README 커밋 권한
 
 jobs:
   update:
@@ -14,41 +14,20 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - name: Build blog list with rss2json
+      - name: Build blog list with rss2json (via jq)
         id: build
         shell: bash
         run: |
           set -euo pipefail
           FEED_URL="https://api.rss2json.com/v1/api.json?rss_url=https://cherryberry0327.tistory.com/rss"
 
-          # RSS → JSON
-          if ! JSON="$(curl -fsSL "$FEED_URL")"; then
-            echo "❌ rss2json 요청 실패"; exit 1
-          fi
+          # RSS -> JSON
+          JSON="$(curl -fsSL "$FEED_URL")"
 
-          # 최근 5개 제목+링크 → 마크다운 리스트
-          LIST="$(python3 - <<'PY'
-import sys, json
-try:
-    data = json.load(sys.stdin)
-except Exception as e:
-    print("JSON parse error:", e, file=sys.stderr); sys.exit(1)
+          # 최근 5개 제목+링크를 마크다운 리스트로 생성
+          LIST="$(echo "$JSON" | jq -r '.items[:5][] | "- [\(.title | gsub("\n";" ") )](\(.link))"')"
 
-items = data.get("items", [])[:5]
-out = []
-for it in items:
-    title = (it.get("title") or "(no title)").replace("\n"," ").strip()
-    url = it.get("link") or "#"
-    out.append(f"- [{title}]({url})")
-print("\n".join(out))
-PY
-          <<<"$JSON")"
-
-          # 비어있으면 실패 처리(선택)
-          if [ -z "$LIST" ]; then
-            echo "피드에 항목이 없거나 파싱 실패"; exit 1
-          fi
-
+          # GitHub Actions 출력 변수로 전달
           {
             echo "list<<EOF"
             echo "$LIST"
@@ -64,11 +43,6 @@ PY
           END="<!-- BLOG-POST-LIST:END -->"
           LIST="${{ steps.build.outputs.list }}"
 
-          if [ ! -f "$FILE" ]; then
-            echo "$FILE 이(가) 없습니다"; exit 1
-          fi
-
-          # 구간 치환
           awk -v start="$START" -v end="$END" -v repl="$LIST" '
             BEGIN{insec=0}
             {
@@ -82,5 +56,5 @@ PY
       - name: Commit & Push
         uses: stefanzweifel/git-auto-commit-action@v5
         with:
-          commit_message: "docs: update blog posts via rss2json"
+          commit_message: "docs: update blog posts via rss2json + jq"
           file_pattern: README.md
