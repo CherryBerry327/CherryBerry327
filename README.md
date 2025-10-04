@@ -5,7 +5,8 @@
 - 🎓 Currently studying **Computer Science (Software)** at CBNU  
 - 🔭 Focused on **Artificial Intelligence, Machine Learning, and Backend Development**  
 
----
+
+
 
 ## ⚒️ Tech Stack
 <p align="center">
@@ -28,13 +29,13 @@
   <img src="https://img.shields.io/badge/Google_Colab-F9AB00?style=for-the-badge&logo=googlecolab&logoColor=white"/>
 </p>
 
+
 ## 📰 Blog / Recent Posts  
 최신 글을 보려면 [내 블로그](https://cherryberry0327.tistory.com/) 방문하기 :revolving_hearts: 
 
 <!-- BLOG-POST-LIST:START -->
 <!-- BLOG-POST-LIST:END -->
 
----
 
 ## 📫 Contact & Links  
 - **📧 Email**: yurica0615@gmail.com  
