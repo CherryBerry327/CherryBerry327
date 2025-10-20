@@ -22,9 +22,9 @@
 <div align="center">
 
 <!-- BLOG-POST-LIST:START -->
+[협업을 위한 Github Organization Tutorial](https://cherryberry0327.tistory.com/20)<br>
 [Tacotron2 + (Griffin-Lim / WaveGlow / WaveRNN) 보코더 3종 실습](https://cherryberry0327.tistory.com/19)<br>
 [GitHub Actions로 프로필 README에 블로그 최신 글 자동 반영하기](https://cherryberry0327.tistory.com/18)<br>
-[Pytorch - Audio Input/Output](https://cherryberry0327.tistory.com/17)<br>
 <!-- BLOG-POST-LIST:END -->
 </div>
 
