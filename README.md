@@ -22,9 +22,9 @@
 <div align="center">
 
 <!-- BLOG-POST-LIST:START -->
+[Transfer Learning for Computer Vision Tutorial로 데이터 학습시키기](https://cherryberry0327.tistory.com/22)<br>
 [내가 애용하는 VS code Extension 추천](https://cherryberry0327.tistory.com/21)<br>
 [협업을 위한 Github Organization Tutorial](https://cherryberry0327.tistory.com/20)<br>
-[Tacotron2 + (Griffin-Lim / WaveGlow / WaveRNN) 보코더 3종 실습](https://cherryberry0327.tistory.com/19)<br>
 <!-- BLOG-POST-LIST:END -->
 </div>
 
